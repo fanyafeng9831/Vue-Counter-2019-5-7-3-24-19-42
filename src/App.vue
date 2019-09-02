@@ -1,17 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <input v-model="initNum">
+    <Counter v-on:count="count" v-for="n in getNum(initNum)" v-bind:key="n" v-bind:msg="n"/>
+    <span>Sum:{{sum}}</span>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Counter from './components/Counter.vue'
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    HelloWorld
+    Counter
+  },
+  methods: {
+    getNum: function (e) {
+      let reg = /^[0-9]\d*$/
+      if (reg.test(e)) {
+        return  parseInt(e)
+      }
+      return 0
+    },
+    count: function (e) {
+      this.sum = this.sum + e
+    }
+  },
+  data () {
+    return {
+      initNum: 3,
+      sum: 0
+    }
   }
 }
 </script>
